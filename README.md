@@ -7,8 +7,9 @@ Modifications made by the Emory Center for Digital Scholarship
 This plugin adds the CSV export format to items in Omeka Classic 2.3+ and collections in Omeka Classic 2.5+. Exported CSV files are compatible with the [CSV Import plugin](http://omeka.org/add-ons/plugins/csv-import/).
 
 The modifications make it possible to:
--export all the items instead of ten at a time
--export the original filename without the accompanying url
+
+- export all the items instead of ten at a time
+- export the original filename without the accompanying url
 
 ## System Requirements
 
