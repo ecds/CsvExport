@@ -60,8 +60,8 @@ function getCsvRow($item, $elements) {
     foreach ($files as $file) {
         // Canonical: Use original file name if it is a URL, otherwise use the local web path
         if ($useCanonical) {
-            $fileUrls[] = (preg_match('/^http[s]?:/', $file->original_filename)) ? $file->original_filename : $file->getWebPath();
-        }
+$fileUrls[] = $file->original_filename;        
+}
         // Not canonical: Always use the local web path
         else {
             $fileUrls[] = $file->getWebPath();
@@ -103,26 +103,10 @@ function printCsvExport($items) {
     // Header: Property tail
     $headerEntries = array_merge($baseHeaderEntries, array('tags', 'file', 'itemType', 'collection', 'public', 'featured'));
     // Header: Write it in
-    _fputcsv($f, $headerEntries);
+    fputcsv($f, $headerEntries, ',', '"', "\0");
 
     // Body
     foreach ($items as $item) {
-        _fputcsv($f, getCsvRow($item, $elements));
-    }
-    
-    // Done writing
-    fclose($f);
-}
-
-/**
- * Cross-compatible version of fputcsv() for working around RHEL 7.
- * @param resource $f
- * @param array $row
- */
-function _fputcsv($f, $row) {
-    if (version_compare(PHP_VERSION, '5.5.4', '<')) {
-        fputcsv($f, $row, ',', '"');
-    } else {
-        fputcsv($f, $row, ',', '"', "\0");
+        fputcsv($f, getCsvRow($item, $elements), ',', '"', "\0");
     }
 }
