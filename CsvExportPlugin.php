@@ -9,11 +9,17 @@ class CsvExportPlugin extends Omeka_Plugin_AbstractPlugin
         'upgrade',
     );
     
-    protected $_filters = array(
+       protected $_filters = array(
         'response_contexts',
         'action_contexts',
+        'items_browse_per_page',
     );
-    
+    public function filterItemsBrowsePerPage($perPage, $args) {
+    if( $_GET["output"] == 'csv'){
+        $perPage=null; // no pagination
+    }
+    return $perPage;
+    } 
     /**
      * HOOK install: Set initial plugin configurations.
      */
